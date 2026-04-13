@@ -1,0 +1,213 @@
+import Slider from "./Slider";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { useData } from "../context/DataContext";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useOutletContext } from "react-router-dom";
+
+const Projects = () => {
+    useEffect(() => {
+        AOS.init({
+            duration: 1200,
+            offset: 100,
+            delay: 100,
+            once: false,
+            mirror: true,
+            easing: "ease-in-out",
+            anchorPlacement: "top-bottom",
+        });
+    }, []);
+
+    const [activeSlug, setActiveSlug] = useState(null);
+    const [previousSlugs, setPreviousSlugs] = useState([]);
+    const rowRef = useRef(null);
+    const projectRefs = useRef({});
+
+    const { projectData } = useData();
+    const selectedCategory = useOutletContext();
+    console.log('fsdfsdfsd', projectData);
+    // ✅ Read slug from URL
+    useEffect(() => {
+        const pathSlug = window.location.pathname.split("/").pop();
+        if (pathSlug) setActiveSlug(pathSlug);
+    }, []);
+
+    // ✅ Default category = 5
+    const defaultCategory = 5;
+
+    // ✅ Memoized filtered projects
+    const filteredProjects = useMemo(() => {
+        const activeCategory =
+            selectedCategory?.selectedCategory || defaultCategory;
+
+        return projectData?.filter((project) => {
+            const categoryIds = project.category_id.toString().split(",");
+            return categoryIds.includes(activeCategory.toString());
+        });
+    }, [projectData, selectedCategory]);
+
+    useEffect(() => {
+        setActiveSlug(null);
+        setPreviousSlugs([]);
+    }, [selectedCategory]);
+    useEffect(() => {
+        if (activeSlug && projectRefs.current[activeSlug]) {
+            const el = projectRefs.current[activeSlug];
+            const activeIndex = filteredProjects.findIndex(
+                (p) => p.slug === activeSlug
+            );
+
+            if (activeIndex > 0) {
+                setTimeout(() => {
+                    const rect = el.getBoundingClientRect();
+
+                    window.scrollBy({
+                        top: rect.top - 100,
+                        behavior: "smooth",
+                    });
+                }, 650);
+            }
+        }
+    }, [activeSlug, filteredProjects]);
+    const handleClick = (slug) => {
+        if (slug !== activeSlug) {
+            if (activeSlug && !previousSlugs.includes(activeSlug)) {
+                setPreviousSlugs((prev) =>
+                    prev.includes(activeSlug) ? prev : [...prev, activeSlug]
+                );
+            }
+        }
+
+        setActiveSlug(slug);
+        window.history.pushState({}, "", `/${slug}`);
+    };
+
+    return (
+        <section className="projects pt-5">
+            <div className="container-fluid">
+                <AnimatePresence>
+                    <motion.div
+                        ref={rowRef}
+                        className="row relative"
+                        style={{ transformOrigin: "center center", overflow: "visible" }}
+                    >
+                        {filteredProjects?.map((project, index) => {
+                            if (!project) return null;
+                            const {
+                                slug,
+                                id,
+                                project_name,
+                                project_address,
+                                project_thumbnail,
+                                project_main_image,
+                            } = project;
+
+                            const key =
+                                slug && slug.trim()
+                                    ? slug
+                                    : id
+                                        ? `id-${id}`
+                                        : `index-${index}`;
+
+                            const isActive = activeSlug === slug;
+                            const isPrevious = previousSlugs.includes(slug);
+
+                            const setRef = (el) => {
+                                if (slug && el) projectRefs.current[slug] = el;
+                            };
+
+                            // 🟩 Active Project
+                            if (isActive) {
+                                return (
+                                    <motion.div
+                                        ref={setRef}
+                                        key={key}
+                                        initial={{ opacity: 0.8, scale: 1.50 }}
+                                        animate={{ opacity: 1, scale: 2.25 }}
+                                        exit={{ opacity: 0, scale: 1 }}
+                                        transition={{ duration: 0.6, ease: "easeInOut" }}
+                                        className="bg-green-200 rounded-lg relative z-20"
+                                        style={{ transformOrigin: "top left" }}
+                                    >
+                                        <div className="p-6">
+                                            <Slider
+                                                projectId={slug}
+                                                onClick={() => handleClick(slug)}
+                                                carouselMargin={380}
+                                                opacity={1}
+                                                fontSize={"8px"}
+                                                drag={"x"}
+                                            />
+                                        </div>
+                                    </motion.div>
+                                );
+                            }
+
+                            // 🟨 Previous Projects
+                            if (isPrevious) {
+                                return (
+                                    <motion.div
+                                        ref={setRef}
+                                        key={key}
+                                        initial={{ scale: 1 }}
+                                        animate={{ scale: 1.4 }}
+                                        transition={{ duration: 0.5 }}
+                                        className="bg-yellow-200 rounded-lg relative z-10 cursor-pointer"
+                                        style={{ transformOrigin: "top left" }}
+                                        onClick={() => handleClick(slug)}
+                                    >
+                                        <div className="p-6">
+                                            <Slider
+                                                projectId={slug}
+                                                carouselMargin={140}
+                                                opacity={0}
+                                                fontSize={"12px"}
+                                                drag={"x"}
+                                            />
+                                        </div>
+                                    </motion.div>
+                                );
+                            }
+                            return (
+                                <div
+                                    ref={setRef}
+                                    className="pb-4 project relative z-0 justify-content-center"
+                                    data-aos="fade-up"
+                                    data-aos-delay="200"
+                                    key={key}
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => handleClick(slug)}
+                                >
+                                    <div className="smallImage">
+                                        <div className="project_box">
+                                            <img
+                                                src={`${import.meta.env.VITE_IMAGE_URL}/frontend/project-thumbnails/${project_thumbnail}`}
+                                                alt={project_name}
+                                            />
+                                            <h3>{project_name}</h3>
+                                            <p>{project_address}</p>
+                                        </div>
+                                    </div>
+                                    <div className="project_img">
+                                        <img
+                                            src={`${import.meta.env.VITE_IMAGE_URL}/frontend/project-images/${project_main_image}`}
+                                            alt={project_name}
+                                        />
+                                    </div>
+                                </div>
+                            );
+                        })}
+                        {filteredProjects?.length === 0 && (
+                            <div className="col-12 text-center py-5 noProject">
+                                No projects found for this category.
+                            </div>
+                        )}
+                    </motion.div>
+                </AnimatePresence>
+            </div>
+        </section>
+    );
+};
+
+export default Projects;
