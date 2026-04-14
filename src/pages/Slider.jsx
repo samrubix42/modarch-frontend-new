@@ -45,14 +45,14 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
         });
 
         const offsetWidth = carouselRef.current.offsetWidth;
-
-        // Since the parent container is scaled (e.g. 2.25x),
-        // we must calculate how much of the unscaled width practically fits into the physical monitor
         const rect = carouselRef.current.getBoundingClientRect();
         const scale = offsetWidth > 0 ? rect.width / offsetWidth : 1;
 
-        const rightEdgeOfScreen = window.innerWidth;
-        const availableScreenLocal = (rightEdgeOfScreen - rect.left) / scale;
+        // Calculate how much unscaled width is actually visible on the screen
+        const visibleOnScreen = (window.innerWidth - rect.left) / scale;
+
+        // Use the smaller of container width or visible screen space to determine logical visible portion
+        const availableScreenLocal = Math.min(offsetWidth, visibleOnScreen);
 
         // No extra buffer, so the slider stops perfectly at the end of the last item
         let requiredWidth = totalWidth - availableScreenLocal;
@@ -243,7 +243,7 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
             )}
 
             {project?.project_main_image && (
-              <motion.div className="item" style={{
+              <motion.div className="item secondItem" style={{
                 cursor: "zoom-in", padding: "5px",
               }}>
                 <img

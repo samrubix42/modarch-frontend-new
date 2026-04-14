@@ -8,7 +8,9 @@ const Header = ({ selectedCategory, setSelectedCategory }) => {
   const [categories, setCategories] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const category = window.location.pathname.split("/")[1];
-
+  if (category) {
+    setSelectedCategory(category);
+  }
   useEffect(() => {
     api
       .get("/categories")
@@ -19,7 +21,7 @@ const Header = ({ selectedCategory, setSelectedCategory }) => {
       })
       .catch((error) => console.error("Error fetching Categories:", error));
   }, []);
-  console.log('fsdfsd1111', category);
+
   return (
     <header className="header bg-white shadow-sm sticky-top p-0">
       <nav className="navbar navbar-expand-lg navbar-light bg-white p-0">
@@ -65,11 +67,11 @@ const Header = ({ selectedCategory, setSelectedCategory }) => {
                 <li key={id} data-id={id} className="nav-item">
                   <Link
                     to={slug}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSelectedCategory(slug);
-                      window.history.pushState({}, "", `/${slug}`);
-                    }}
+                    // onClick={(e) => {
+                    //   e.preventDefault();
+                    //   setSelectedCategory(slug);
+                    //   window.history.pushState({}, "", `/${slug}`);
+                    // }}
                     className={`nav-link px-2 py-2 d-flex ${slug === category ? "active-category" : ""} small justify-content-between align-items-center`}
                   >
                     {name}

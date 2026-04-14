@@ -9,9 +9,9 @@ const Layout = ({ settings }) => {
   const navigate = useNavigate();
   const handleCategoryChange = (categoryId) => {
     setSelectedCategory(categoryId);
-    navigate('/');
+    // navigate('/');
   };
-  console.log('testintitirht', settings);
+
   return (
     <div className="main">
       <Header selectedCategory={selectedCategory} setSelectedCategory={handleCategoryChange} />

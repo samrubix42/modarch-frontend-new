@@ -250,19 +250,18 @@ footer {
 }
 
 .item {
-  /* min-width: calc(100% / 3 - 1rem); */
   flex-shrink: 0;
   overflow: hidden;
   box-sizing: border-box;
   padding: 0px 5px;
-  height: fit-content !important;
+  /* height: fit-content !important; */
   border-radius: 0px !important;
 }
 
 .item .project_box img,
 .project_box img {
-  width: stretch !important;
-  object-fit: contain;
+  width: 100px !important;
+  object-fit: cover !important;
   border-radius: 0px;
   display: block;
   border-radius: 0px !important;
@@ -283,14 +282,20 @@ footer {
   text-align: right;
 }
 
-.item img {
+/* .item img {
   object-fit: cover;
   pointer-events: none;
-  width: 400px !important;
+}
+
+.inner-carousel .image {
+  width: 350px !important;
+  height: 350px !important;
 }
 
 .secondItem {
-  min-width: 10% !important;
+  width: 200px !important;
+} */
+.secondItem {
   width: 200px !important;
 }
 
@@ -449,10 +454,14 @@ button:focus:not(:focus-visible) {
   }
 }
 
+.item {
+  min-width: fit-content !important;
+}
+
 @media (min-width: 769px) {
-  .item {
+  /* .item {
     min-width: fit-content !important;
-  }
+  } */
 }
 
 .w-20 {
@@ -494,7 +503,12 @@ button:focus:not(:focus-visible) {
 }
 
 .details {
-  margin: 45px 0px 0px;
+  margin: 10px 0px 0px;
+}
+
+.secondItem img {
+  object-fit: cover !important;
+  width: 440px !important;
 }
 
 .smallImage {
@@ -722,9 +736,9 @@ label i {
   color: #198754 !important;
 }
 
-.item {
+/* .item {
   min-width: fit-content;
-}
+} */
 
 .description {
   min-width: 5% !important;

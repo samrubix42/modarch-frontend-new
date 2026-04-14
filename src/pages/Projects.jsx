@@ -135,7 +135,7 @@ const Projects = () => {
                         fontSize={"8px"}
                         drag={"x"}
                         index={index}
-                        justified={'center'}
+                        justified={''}
                       />
                     </div>
                   </motion.div>
@@ -164,7 +164,7 @@ const Projects = () => {
                         fontSize={"12px"}
                         drag={"x"}
                         index={index}
-                        justified={'center'}
+                        justified={''}
                       />
                     </div>
                   </motion.div>

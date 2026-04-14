@@ -13,6 +13,7 @@ const Preloader = () => {
       // Remove preloader after slide animation finishes
       const mainContentTimer = setTimeout(() => {
         setShowMainContent(true);
+        sessionStorage.setItem("preloaderShown", "true");
       }, 2000); // match slide duration
 
       return () => clearTimeout(mainContentTimer);
