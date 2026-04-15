@@ -357,7 +357,7 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
                 )}
 
                 {item?.type === "description" && item?.description && (
-                  <div style={{
+                  <div dangerouslySetInnerHTML={{ __html: item?.description }} style={{
                     width: "auto",
                     background: "",
                     borderRadius: "8px",
@@ -370,14 +370,13 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
                     justifyContent: "center",
                     flexShrink: 0,
                   }}>
-                    {item?.description}
                   </div>
                 )}
               </motion.div>
             ))}
           </motion.div>
         </AnimatePresence>
-      </motion.div>
-    </div>
+      </motion.div >
+    </div >
   );
 }
