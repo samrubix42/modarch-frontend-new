@@ -4,7 +4,7 @@ import { useData } from "../context/DataContext";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
 
-export default function MotionSlider({ projectId, carouselMargin = 40, topMargin = 50, fontSize = "16px", opacity = 1, display, drag = "x", index, justified, classs }) {
+export default function MotionSlider({ projectId, carouselMargin = 40, topMargin = 50, fontSize = "16px", opacity = 1, display, drag = "x", index, justified, classs, itemClass }) {
   useEffect(() => {
     AOS.init({
       duration: 1200,       // Animation duration
@@ -251,7 +251,7 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
             )}
 
             {project?.project_main_image && (
-              <motion.div className="item secondItem" style={{
+              <motion.div className={`item ${itemClass}`} style={{
                 cursor: "zoom-in", padding: "5px",
               }}>
                 <img

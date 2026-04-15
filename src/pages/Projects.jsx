@@ -81,7 +81,7 @@ const Projects = () => {
   return (
     <section className="projects pt-5">
       <div className="container-fluid">
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           <motion.div
             ref={rowRef}
             className="row relative"
@@ -137,6 +137,7 @@ const Projects = () => {
                         index={index}
                         justified={''}
                         classs={'mobileSlider'}
+                        itemClass={''}
                       />
                     </div>
                   </motion.div>
@@ -167,6 +168,7 @@ const Projects = () => {
                         index={index}
                         justified={''}
                         classs={'mobileSlider'}
+                        itemClass={''}
                       />
                     </div>
                   </motion.div>
@@ -176,9 +178,13 @@ const Projects = () => {
                 <motion.div
                   ref={setRef}
                   key={key}
-                  transition={{ duration: 0.4 }}
+                  // transition={{ duration: 0.4 }}
                   className="relative z-0 cursor-pointer"
                   onClick={() => handleClick(slug)}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
                 >
                   <Slider
                     projectId={slug}
@@ -191,6 +197,7 @@ const Projects = () => {
                     index={index}
                     justified={'center'}
                     classs={''}
+                    itemClass={'secondItem'}
                   />
                 </motion.div>
               );

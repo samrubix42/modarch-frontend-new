@@ -63,16 +63,15 @@ const Header = ({ selectedCategory, setSelectedCategory }) => {
               }`}
           >
             <ul className="navbar-nav text-center mt-3 mt-lg-0 align-items-center gap-lg-3">
-              {categories?.map(({ id, name, slug }, index) => (
+              {categories?.map(({ id, name, slug }) => (
                 <li key={id} data-id={id} className="nav-item">
                   <Link
                     to={slug}
-                    // onClick={(e) => {
-                    //   e.preventDefault();
-                    //   setSelectedCategory(slug);
-                    //   window.history.pushState({}, "", `/${slug}`);
-                    // }}
-                    className={`nav-link px-2 py-2 d-flex ${slug === category ? "active-category" : ""} small justify-content-between align-items-center`}
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    className={`nav-link px-2 py-2 d-flex ${(category ? slug === category : slug === "featured")
+                      ? "active-category"
+                      : ""
+                      } small justify-content-between align-items-center`}
                   >
                     {name}
                   </Link>

@@ -265,20 +265,15 @@ footer {
   border-radius: 0px;
   display: block;
   border-radius: 0px !important;
-  height: 60px;
+  height: 100px;
   object-position: right;
 }
 
-/* .item .project_box {
-  text-align: right;
-  /* width: 35%; */
-/* float: right; */
-/* } */
 .contact ul li .contact-text {
   flex-direction: row !important;
 }
 
-*/ .project_box {
+.project_box {
   text-align: right;
 }
 
@@ -350,6 +345,14 @@ button:focus:not(:focus-visible) {
   text-transform: uppercase;
 }
 
+.secondItem {
+  height: fit-content !important;
+}
+
+.secondItem img {
+  height: fit-content !important;
+}
+
 @media (max-width: 768px) {
 
   /* .item {
@@ -357,7 +360,10 @@ button:focus:not(:focus-visible) {
   } */
   .secondItem img {
     width: 100% !important;
+
   }
+
+
 
   .item img {
     object-fit: cover !important;
@@ -388,6 +394,10 @@ button:focus:not(:focus-visible) {
 
   .mobileSlider .mobileDetails {
     padding-left: 0px;
+  }
+
+  .mobileDetails img {
+    width: 100px !important;
   }
 
   .item {
