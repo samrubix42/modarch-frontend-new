@@ -138,6 +138,7 @@ const Projects = () => {
                         justified={''}
                         classs={'mobileSlider'}
                         itemClass={''}
+                        x={'-120'}
                       />
                     </div>
                   </motion.div>
@@ -169,6 +170,7 @@ const Projects = () => {
                         justified={''}
                         classs={'mobileSlider'}
                         itemClass={''}
+                        x={'0'}
                       />
                     </div>
                   </motion.div>
@@ -198,6 +200,8 @@ const Projects = () => {
                     justified={'center'}
                     classs={''}
                     itemClass={'secondItem'}
+                    x={'0'}
+
                   />
                 </motion.div>
               );

@@ -261,11 +261,11 @@ footer {
 .item .project_box img,
 .project_box img {
   width: 100px !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   border-radius: 0px;
   display: block;
   border-radius: 0px !important;
-  height: 100px;
+  /* height: 100px; */
   object-position: right;
 }
 
@@ -384,6 +384,7 @@ button:focus:not(:focus-visible) {
 
   .mobileDetails img {
     border-radius: 0px !important;
+    height: 70px !important;
   }
 
   .mobileDetails p {

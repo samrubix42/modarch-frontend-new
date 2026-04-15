@@ -4,7 +4,7 @@ import { useData } from "../context/DataContext";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
 
-export default function MotionSlider({ projectId, carouselMargin = 40, topMargin = 50, fontSize = "16px", opacity = 1, display, drag = "x", index, justified, classs, itemClass }) {
+export default function MotionSlider({ projectId, carouselMargin = 40, topMargin = 50, fontSize = "16px", opacity = 1, display, drag = "x", index, justified, classs, itemClass, xs }) {
   useEffect(() => {
     AOS.init({
       duration: 1200,       // Animation duration
@@ -20,6 +20,7 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
   const innerCarouselRef = useRef();
   const [width, setWidth] = useState(0);
   const x = useMotionValue(0);
+  const [hasNudged, setHasNudged] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   useEffect(() => {
     const handleResize = () => {
@@ -105,11 +106,24 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
               }`}
             drag={drag}
             style={{ x }}
+            // dragConstraints={{ right: 0, left: -width }}
+            // dragElastic={0.15}
+            // dragMomentum={true}
+            // initial={{ justifyContent: justified }}
+            // animate={{ justifyContent: justified }}
+            initial={{ x: 0, justifyContent: justified }}
+            animate={
+              isMobile && hasNudged
+                ? { x: xs } // 👈 move right and stay there
+                : { justifyContent: justified }
+            }
+            transition={{
+              duration: 0.9,
+              ease: [0.25, 1, 0.5, 1], // premium feel
+            }}
             dragConstraints={{ right: 0, left: -width }}
             dragElastic={0.15}
             dragMomentum={true}
-            initial={{ justifyContent: justified }}
-            animate={{ justifyContent: justified }}
 
           >
             {project && (
@@ -251,7 +265,7 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
             )}
 
             {project?.project_main_image && (
-              <motion.div className={`item ${itemClass}`} style={{
+              <motion.div className={`item ${itemClass} ${isMobile ? 'secondItem' : ''}`} style={{
                 cursor: "zoom-in", padding: "5px",
               }}>
                 <img
