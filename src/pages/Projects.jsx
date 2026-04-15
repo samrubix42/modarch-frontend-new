@@ -136,6 +136,7 @@ const Projects = () => {
                         drag={"x"}
                         index={index}
                         justified={''}
+                        classs={'mobileSlider'}
                       />
                     </div>
                   </motion.div>
@@ -165,6 +166,7 @@ const Projects = () => {
                         drag={"x"}
                         index={index}
                         justified={''}
+                        classs={'mobileSlider'}
                       />
                     </div>
                   </motion.div>
@@ -188,6 +190,7 @@ const Projects = () => {
                     drag={"x"}
                     index={index}
                     justified={'center'}
+                    classs={''}
                   />
                 </motion.div>
               );

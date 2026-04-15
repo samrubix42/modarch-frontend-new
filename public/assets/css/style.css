@@ -342,11 +342,70 @@ button:focus:not(:focus-visible) {
   font-size: 14px;
 }
 
+.mobileDetails {
+  display: none;
+}
+
+.project_box p {
+  text-transform: uppercase;
+}
+
 @media (max-width: 768px) {
 
   /* .item {
     width: 100% !important;
   } */
+  .secondItem img {
+    width: 100% !important;
+  }
+
+  .item img {
+    object-fit: cover !important;
+  }
+
+  .inner-carousel {
+    margin: 0px !important;
+  }
+
+  .mobileDetails {
+    padding: 15px 0px 0px 43px;
+    display: block;
+  }
+
+  .mobileDetails h3 {
+    font-size: 15px !important;
+  }
+
+  .mobileDetails img {
+    border-radius: 0px !important;
+  }
+
+  .mobileDetails p {
+    text-transform: uppercase;
+    color: #777;
+    font-size: 13px !important;
+  }
+
+  .mobileSlider .mobileDetails {
+    padding-left: 0px;
+  }
+
+  .item {
+    height: fit-content !important;
+  }
+
+  .carouselMargin {
+    overflow: hidden;
+  }
+
+  .inner-carousel {
+    margin: 10px !important;
+  }
+
+  .projects {
+    padding-top: 20px !important;
+  }
+
   .description {
     min-width: 100% !important;
   }
@@ -429,7 +488,11 @@ button:focus:not(:focus-visible) {
   }
 
   .container-fluid {
-    padding: 0px 20px;
+    padding: 0px 10px !important;
+  }
+
+  .description {
+    min-width: 100% !important;
   }
 
   .getInTouch {
@@ -742,6 +805,10 @@ label i {
 
 .description {
   min-width: 5% !important;
+}
+
+.descriptions {
+  min-width: 70% !important;
 }
 
 /* 

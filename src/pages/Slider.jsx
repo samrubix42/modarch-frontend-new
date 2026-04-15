@@ -4,7 +4,7 @@ import { useData } from "../context/DataContext";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
 
-export default function MotionSlider({ projectId, carouselMargin = 40, topMargin = 50, fontSize = "16px", opacity = 1, display, drag = "x", index, justified }) {
+export default function MotionSlider({ projectId, carouselMargin = 40, topMargin = 50, fontSize = "16px", opacity = 1, display, drag = "x", index, justified, classs }) {
   useEffect(() => {
     AOS.init({
       duration: 1200,       // Animation duration
@@ -20,7 +20,15 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
   const innerCarouselRef = useRef();
   const [width, setWidth] = useState(0);
   const x = useMotionValue(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   useEffect(() => {
     if (justified === 'start') {
       x.set(0);
@@ -88,7 +96,7 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
           duration: 0.5
         }}
         whileTap={{ cursor: "grabbing" }}
-        className="carouselMargin"
+        className={`carouselMargin ${classs}`}
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -251,10 +259,64 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
                   alt={`media-project_main_image`}
                   style={{ objectFit: "contain", }}
                 />
+                <div className="mobileDetails">
+                  <div className="row">
+                    <div className="col-3">
+                      {
+                        project.project_thumbnail && (
+                          <img
+                            src={`${import.meta.env.VITE_IMG_URL}${project.project_thumbnail}`}
+                            alt={project.project_name}
+                            className="img-fluid rounded mb-2"
+                            style={{ cursor: "zoom-in" }}
+                          />
+                        )
+                      }
+                    </div>
+                    <div className="col-9 p-0">
+                      {/* Project title & address */}
+                      {project.project_name && <h3 style={{ fontSize }}>{
+                        (() => {
+                          const words = project.project_name.trim().split(" ");
+                          if (words.length > 2) {
+                            return (
+                              <>
+                                {words[0] + " " + words[1]}
+                                <br />
+                                {words[2]}
+                              </>
+                            );
+                          } else if (words.length > 3) {
+                            return (
+                              <>
+                                {words[0] + " " + words[1]}
+                                <br />
+                                {words[2] + " " + words[3]}
+                              </>
+                            );
+                          } else if (words.length > 4) {
+                            return (
+                              <>
+                                {words[0] + " " + words[1]}
+                                <br />
+                                {words[2] + " " + words[3]}
+                                <br />
+                                {words[4]}
+                              </>
+                            );
+                          }
+                          return project.project_name;
+                        })()
+                      }</h3>}
+                      {project.project_address && <p style={{ fontSize }}>{project.project_address}</p>}
+                    </div>
+                  </div>
+
+                </div>
               </motion.div>
             )}
             {mediaItems.map((item, index) => (
-              <motion.div key={index} className={`item ${item?.type === 'description' ? 'description' : 'image'}`} style={{
+              <motion.div key={index} className={`item ${item?.type === 'description' ? isMobile ? "descriptions" : "description" : 'image'}`} style={{
                 width: item?.type === "description" ? "20%" : '',
                 maxWidth: item?.type === "description" ? "15%" : '',
                 minWidth: item?.type === "description" ? "5%" : '',
