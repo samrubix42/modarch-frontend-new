@@ -57,10 +57,7 @@ const Header = ({ selectedCategory, setSelectedCategory }) => {
           </button>
 
           {/* Menu */}
-          <div
-            className={`collapse navbar-collapse justify-content-end ${menuOpen ? "show" : ""
-              }`}
-          >
+          <div className={`navbar-collapse custom-menu justify-content-end ${menuOpen ? "open" : ""}`}>
             <ul className="navbar-nav text-center mt-3 mt-lg-0 align-items-center gap-lg-3">
               {categories?.map(({ id, name, slug }) => (
                 <li key={id} data-id={id} className="nav-item">
@@ -79,7 +76,7 @@ const Header = ({ selectedCategory, setSelectedCategory }) => {
             </ul>
             {/* Right Button */}
             <div className="text-center mt-3 mt-lg-0 ms-lg-4">
-              <Link to="/contact" onClick={() => setMenuOpen(!menuOpen)} class="btn btn-success px-4 py-2 rounded-pill fw-semibold" >Get in Touch</Link>
+              <Link to="/contact" onClick={() => setMenuOpen(!menuOpen)} class="btn btn-success px-4 py-2 rounded-pill fw-semibold touch" >Get in Touch</Link>
             </div>
           </div>
         </div>

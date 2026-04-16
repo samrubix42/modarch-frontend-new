@@ -21,7 +21,8 @@ header img {
 }
 
 .navbar-expand-lg .navbar-nav {
-  gap: 18px;
+  gap: 0px;
+  margin: 0px !important
 }
 
 header {
@@ -377,9 +378,30 @@ button:focus:not(:focus-visible) {
   height: fit-content !important;
 }
 
+
+
 @media (max-width: 768px) {
   .descriptions p {
     margin-bottom: 0px !important;
+    font-size: 8px !important;
+  }
+
+  .custom-menu {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.4s ease-in-out;
+  }
+
+  .custom-menu.open {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .touch {
+    margin-bottom: 20px;
   }
 
   .secondItem img {
@@ -564,6 +586,20 @@ button:focus:not(:focus-visible) {
   .descriptions p {
     margin-bottom: 0px !important;
     font-size: 15px;
+  }
+
+  .custom-menu {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.4s ease-in-out;
+  }
+
+  .custom-menu.open {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .secondItem img {
