@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../api/api";
 import "./Header.css";
-import { useParams } from "react-router-dom";
 
 const Header = ({ selectedCategory, setSelectedCategory }) => {
   const [categories, setCategories] = useState([]);
@@ -80,7 +79,7 @@ const Header = ({ selectedCategory, setSelectedCategory }) => {
             </ul>
             {/* Right Button */}
             <div className="text-center mt-3 mt-lg-0 ms-lg-4">
-              <Link to="/contact" class="btn btn-success px-4 py-2 rounded-pill fw-semibold" >Get in Touch</Link>
+              <Link to="/contact" onClick={() => setMenuOpen(!menuOpen)} class="btn btn-success px-4 py-2 rounded-pill fw-semibold" >Get in Touch</Link>
             </div>
           </div>
         </div>

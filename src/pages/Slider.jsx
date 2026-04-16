@@ -4,7 +4,7 @@ import { useData } from "../context/DataContext";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
 
-export default function MotionSlider({ projectId, carouselMargin = 40, topMargin = 50, fontSize = "16px", opacity = 1, display, drag = "x", index, justified, classs, itemClass, xs }) {
+export default function MotionSlider({ projectId, carouselMargin = 40, topMargin = 50, fontSize = "16px", opacity = 1, display, drag = "x", index, justified, classs, itemClass, xs, isAct }) {
   useEffect(() => {
     AOS.init({
       duration: 1200,       // Animation duration
@@ -21,12 +21,23 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
   const [width, setWidth] = useState(0);
   const x = useMotionValue(0);
   const [hasNudged, setHasNudged] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [screen, setScreen] = useState({
+    isMobile: window.innerWidth <= 768,
+    isTablet: window.innerWidth > 768 && window.innerWidth <= 1024,
+    isDesktop: window.innerWidth > 1024,
+  });
+
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+      const width = window.innerWidth;
 
+      setScreen({
+        isMobile: width <= 768,
+        isTablet: width > 768 && width <= 1024,
+        isDesktop: width > 1024,
+      });
+    };
+    console.log('window.innerWidth', window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -106,25 +117,11 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
               }`}
             drag={drag}
             style={{ x }}
-            // dragConstraints={{ right: 0, left: -width }}
-            // dragElastic={0.15}
-            // dragMomentum={true}
-            // initial={{ justifyContent: justified }}
-            // animate={{ justifyContent: justified }}
-            initial={{ x: 0, justifyContent: justified }}
-            animate={
-              isMobile && hasNudged
-                ? { x: xs } // 👈 move right and stay there
-                : { justifyContent: justified }
-            }
-            transition={{
-              duration: 0.9,
-              ease: [0.25, 1, 0.5, 1], // premium feel
-            }}
             dragConstraints={{ right: 0, left: -width }}
             dragElastic={0.15}
             dragMomentum={true}
-
+            initial={{ justifyContent: justified }}
+            animate={{ justifyContent: justified }}
           >
             {project && (
               <motion.div className="item firstItem">
@@ -133,7 +130,7 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
                     <img
                       src={`${import.meta.env.VITE_IMG_URL}${project.project_thumbnail}`}
                       alt={project.project_name}
-                      className="img-fluid rounded mb-2"
+                      className="img-fluid mb-2"
                       style={{ cursor: "zoom-in" }}
                     />
                   )}
@@ -175,8 +172,8 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
                   {/* Project details */}
                   <motion.div
                     className="details"
-                    initial={{ display: display }}
-                    animate={{ display: display }}
+                    initial={{ opacity: opacity }}
+                    animate={{ opacity: opacity }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                   >
                     {
@@ -265,7 +262,7 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
             )}
 
             {project?.project_main_image && (
-              <motion.div className={`item ${itemClass} ${isMobile ? 'secondItem' : ''}`} style={{
+              <motion.div className={`${(screen?.isMobile || screen?.isTablet) ? `${isAct ? 'item secondItem' : 'item secondItem'}` : itemClass}`} style={{
                 cursor: "zoom-in", padding: "5px",
               }}>
                 <img
@@ -287,7 +284,7 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
                         )
                       }
                     </div>
-                    <div className="col-9 p-0">
+                    <div className="col-4 p-0">
                       {/* Project title & address */}
                       {project.project_name && <h3 style={{ fontSize }}>{
                         (() => {
@@ -324,13 +321,23 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
                       }</h3>}
                       {project.project_address && <p style={{ fontSize }}>{project.project_address}</p>}
                     </div>
+                    <div className="col-5 p-0">
+                      {
+                        (screen?.isMobile || screen?.isTablet) && isAct ? (
+                          <div className="slideBtn">
+                            <p>Slide to Right <i className="fa fa-chevron-right"></i></p>
+                          </div>
+                        ) : ''
+                      }
+
+                    </div>
                   </div>
 
                 </div>
               </motion.div>
             )}
             {mediaItems.map((item, index) => (
-              <motion.div key={index} className={`item ${item?.type === 'description' ? isMobile ? "descriptions" : "description" : 'image'}`} style={{
+              <motion.div key={index} className={`item ${item?.type === 'description' ? (screen?.isMobile || screen?.isTablet) ? "descriptions" : "description" : 'image'}`} style={{
                 width: item?.type === "description" ? "20%" : '',
                 maxWidth: item?.type === "description" ? "15%" : '',
                 minWidth: item?.type === "description" ? "5%" : '',
@@ -345,7 +352,7 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
                   <motion.img
                     src={`${import.meta.env.VITE_IMG_URL}${item?.image}`}
                     alt={`media-${index}`}
-                    style={{ height: "280px", objectFit: "contain", width: "100%" }}
+                    style={{ height: screen?.isMobile ? '245px' : screen?.isTablet ? '580px' : "280px", objectFit: "contain", width: "100%" }}
                     whileHover={{ scale: 1.05 }}
                   />
                 )}
@@ -379,7 +386,7 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
                     lineHeight: "1.6",
                     color: "#333",
                     textAlign: "justify",
-                    display: "flex",
+                    // display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     flexShrink: 0,

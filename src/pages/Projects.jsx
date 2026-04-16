@@ -14,16 +14,15 @@ const Projects = () => {
       once: false,
       mirror: true,
       easing: "ease-in-out",
-      // anchorPlacement: "top-bottom",
     });
   }, []);
-  const [activeSlug, setActiveSlug] = useState(null);
+  const [activeSlug, setActiveSlug] = useState(window.location.pathname.split("/")[2]);
+
   const [previousSlugs, setPreviousSlugs] = useState([]);
   const rowRef = useRef(null);
   const projectRefs = useRef({});
   const { projectData } = useData();
   const selectedCategory = useOutletContext();
-  console.log('fsdfsdfsd', selectedCategory);
   useEffect(() => {
     const pathSlug = window.location.pathname.split("/").pop();
     if (pathSlug) setActiveSlug(pathSlug);
@@ -31,7 +30,6 @@ const Projects = () => {
   const defaultCategory = 'featured';
   const filteredProjects = useMemo(() => {
     const activeCategory = selectedCategory?.selectedCategory || defaultCategory;
-    console.log('activeCategory', selectedCategory?.selectedCategory);
     return projectData?.filter((project) => {
       // Extract identifiers (e.g. slug or id) from the category object array
       const categoryIds = Array.isArray(project?.category)
@@ -41,7 +39,6 @@ const Projects = () => {
           : project?.category_id
             ? project.category_id.toString().split(",")
             : [];
-      console.log('ghfhgfhgf', categoryIds, activeCategory);
       return categoryIds.includes(activeCategory.toString());
     });
   }, [projectData, selectedCategory]);
@@ -75,9 +72,12 @@ const Projects = () => {
       }
     }
     setActiveSlug(slug);
-    window.history.pushState({}, "", `/${slug}`);
+    window.history.pushState(
+      {},
+      "",
+      `/${selectedCategory?.selectedCategory || defaultCategory}/${slug}`
+    );
   };
-  console.log('filteredProjects', filteredProjects);
   return (
     <section className="projects pt-5">
       <div className="container-fluid">
@@ -137,8 +137,9 @@ const Projects = () => {
                         index={index}
                         justified={''}
                         classs={'mobileSlider'}
-                        itemClass={''}
+                        itemClass={'item'}
                         x={'-120'}
+                        isAct={1}
                       />
                     </div>
                   </motion.div>
@@ -169,8 +170,9 @@ const Projects = () => {
                         index={index}
                         justified={''}
                         classs={'mobileSlider'}
-                        itemClass={''}
+                        itemClass={'item'}
                         x={'0'}
+                        isAct={0}
                       />
                     </div>
                   </motion.div>
@@ -201,6 +203,7 @@ const Projects = () => {
                     classs={''}
                     itemClass={'secondItem'}
                     x={'0'}
+                    isAct={0}
 
                   />
                 </motion.div>

@@ -60,7 +60,7 @@ header {
 
 .head,
 .head2 {
-  font-size: 8px !important;
+  font-size: 6px !important;
 }
 
 .text-right {
@@ -258,6 +258,30 @@ footer {
   border-radius: 0px !important;
 }
 
+.description p,
+.descriptions p {
+  margin-bottom: 0px;
+  font-size: 7px;
+}
+
+/* 
+.translateX {
+  /* transform: translateX(-140px) !important; */
+/* transition: transform 0.5s ease-in-out; */
+
+/* } */
+
+.slideBtn p {
+  margin: 0px;
+  text-align: right;
+  margin-right: 13px !important;
+}
+
+
+.mobileDetails .row {
+  align-items: center;
+}
+
 .item .project_box img,
 .project_box img {
   width: 100px !important;
@@ -354,16 +378,13 @@ button:focus:not(:focus-visible) {
 }
 
 @media (max-width: 768px) {
-
-  /* .item {
-    width: 100% !important;
-  } */
-  .secondItem img {
-    width: 100% !important;
-
+  .descriptions p {
+    margin-bottom: 0px !important;
   }
 
-
+  .secondItem img {
+    width: 100% !important;
+  }
 
   .item img {
     object-fit: cover !important;
@@ -391,6 +412,199 @@ button:focus:not(:focus-visible) {
     text-transform: uppercase;
     color: #777;
     font-size: 13px !important;
+    margin: 0px;
+  }
+
+  .slideBtn {
+    margin-left: -30px;
+  }
+
+  .mobileDetails img {
+    margin: 0px !important;
+  }
+
+  .mobileSlider .mobileDetails {
+    padding-left: 0px;
+  }
+
+  .mobileDetails img {
+    width: 100px !important;
+  }
+
+  .item {
+    height: fit-content !important;
+  }
+
+  .carouselMargin {
+    overflow: hidden;
+  }
+
+  .inner-carousel {
+    margin: 10px !important;
+  }
+
+  .projects {
+    padding-top: 20px !important;
+  }
+
+  .description {
+    min-width: 100% !important;
+  }
+
+  .project_box p {
+    text-align: left !important;
+  }
+
+  .contactBox {
+    margin-bottom: 10px;
+  }
+
+  .teamSection {
+    padding: 0px !important;
+  }
+
+  .teamSection img,
+  .leaderSection img {
+    margin-bottom: 10px;
+  }
+
+  .teamSection h5 {
+    margin-bottom: 20px;
+  }
+
+  .about h1 {
+    font-size: 40px;
+  }
+
+  .footer-menu ul {
+    display: block !important;
+  }
+
+  .social {
+    justify-content: center !important;
+  }
+
+  .description {
+    width: 20% !important;
+    max-width: 20% !important;
+    min-width: 60% !important;
+    padding: 5px !important;
+    margin: 0px !important;
+  }
+
+  .image {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+  }
+
+  .item:first-child {
+    display: none;
+  }
+
+  .project {
+    display: grid !important;
+    transform: translate(0px, 0px) !important;
+  }
+
+  .smallImage {
+    width: 70% !important;
+  }
+
+  .project_box {
+    text-align: left !important;
+  }
+
+  .carouselMargin {
+    margin: 0px !important;
+  }
+
+  .bg-yellow-200,
+  .bg-green-200 {
+    transform: scale(1) !important;
+  }
+
+  .project_box h3 {
+    text-align: left !important;
+  }
+
+  .container-fluid {
+    padding: 0px 10px !important;
+  }
+
+  .description {
+    min-width: 100% !important;
+  }
+
+  .getInTouch {
+    display: none;
+  }
+
+  .nav-pills .nav-link {
+    text-align: center;
+  }
+
+  .project {
+    display: block;
+  }
+
+  .project_img {
+    width: 100% !important;
+    order: 1;
+  }
+
+  .smallImage {
+    order: 2;
+  }
+}
+
+
+
+@media (max-width: 1024px) {
+  .descriptions p {
+    margin-bottom: 0px !important;
+    font-size: 15px;
+  }
+
+  .secondItem img {
+    width: 100% !important;
+  }
+
+  .item img {
+    object-fit: cover !important;
+  }
+
+  .inner-carousel {
+    margin: 0px !important;
+  }
+
+  .mobileDetails {
+    padding: 15px 0px 0px 0px;
+    display: block;
+  }
+
+  .mobileDetails h3 {
+    font-size: 15px !important;
+  }
+
+  .mobileDetails img {
+    border-radius: 0px !important;
+    height: 70px !important;
+  }
+
+  .mobileDetails p {
+    text-transform: uppercase;
+    color: #777;
+    font-size: 13px !important;
+    margin: 0px;
+  }
+
+  .slideBtn {
+    margin-left: -30px;
+  }
+
+  .mobileDetails img {
+    margin: 0px !important;
   }
 
   .mobileSlider .mobileDetails {
@@ -532,12 +746,6 @@ button:focus:not(:focus-visible) {
   min-width: fit-content !important;
 }
 
-@media (min-width: 769px) {
-  /* .item {
-    min-width: fit-content !important;
-  } */
-}
-
 .w-20 {
   max-width: 20% !important;
   min-width: 20% !important;
@@ -582,7 +790,7 @@ button:focus:not(:focus-visible) {
 
 .secondItem img {
   object-fit: cover !important;
-  width: 440px !important;
+  width: 440px;
 }
 
 .smallImage {
