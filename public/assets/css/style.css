@@ -606,6 +606,10 @@ button:focus:not(:focus-visible) {
     font-size: 15px;
   }
 
+  .item {
+    width: 100% !important;
+  }
+
   .mobileHeight .bg-green-200,
   .mobileHeight .bg-yellow-200 {
     height: fit-content !important;
