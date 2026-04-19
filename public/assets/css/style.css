@@ -376,6 +376,9 @@ button:focus:not(:focus-visible) {
   height: fit-content !important;
 }
 
+.slidingPrev {
+  height: fit-content !important;
+}
 
 @media (max-width: 768px) {
   .descriptions p {

@@ -201,7 +201,7 @@ const Projects = () => {
                   ref={setRef}
                   key={key}
                   // transition={{ duration: 0.4 }}
-                  className={`relative z-0 cursor-pointer sliders${index} ${index === filteredProjects?.length - 1 ? 'last-project' : ''}`}
+                  className={`relative z-0 cursor-pointer slidingPrev sliders${index} ${index === filteredProjects?.length - 1 ? 'last-project' : ''}`}
                   onClick={() => handleClick(slug)}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
