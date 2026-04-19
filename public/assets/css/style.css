@@ -49,7 +49,7 @@ header {
   font-weight: 600;
   /* padding-top: 5px; */
   text-align: right;
-  text-transform: none;
+  text-transform: uppercase !important;
 }
 
 .project_box p {
@@ -285,8 +285,8 @@ footer {
 
 .item .project_box img,
 .project_box img {
-  width: 100px !important;
-  object-fit: contain !important;
+  width: 140px !important;
+  object-fit: cover !important;
   border-radius: 0px;
   display: block;
   border-radius: 0px !important;
@@ -322,6 +322,10 @@ footer {
 body {
   overflow-x: hidden;
 }
+
+/* .carouselMargin:last-child {
+  margin-bottom: 0px !important;
+} */
 
 .btn-success {
   background: #fff;
@@ -374,16 +378,15 @@ button:focus:not(:focus-visible) {
   height: fit-content !important;
 }
 
-.secondItem img {
-  height: fit-content !important;
-}
-
-
 
 @media (max-width: 768px) {
   .descriptions p {
     margin-bottom: 0px !important;
     font-size: 8px !important;
+  }
+
+  .copyright p {
+    text-align: left;
   }
 
   .custom-menu {
@@ -586,6 +589,10 @@ button:focus:not(:focus-visible) {
   .descriptions p {
     margin-bottom: 0px !important;
     font-size: 15px;
+  }
+
+  .copyright p {
+    text-align: left;
   }
 
   .custom-menu {
@@ -827,7 +834,13 @@ button:focus:not(:focus-visible) {
 .secondItem img {
   object-fit: cover !important;
   width: 440px;
+  height: 440px;
+  object-position: center;
 }
+
+/* .projct div:last-child {
+  height: 430px;
+} */
 
 .smallImage {
   padding: 0px 7px;
@@ -899,6 +912,13 @@ p {
 footer {
   padding: 40px 0px;
   border-top: 1px solid #d2d2d2;
+  /* top: 300px; */
+  position: relative;
+  background: #fff;
+}
+
+.last-project {
+  height: fit-content !important;
 }
 
 .copyright a:hover,
@@ -924,6 +944,14 @@ footer {
 .contact ul a {
   color: #000;
 }
+
+.last-project-active footer {
+  top: 300px;
+}
+
+/* .sliders11 .secondItem img {
+  margin-left: -10px;
+} */
 
 .contact ul a:hover {
   color: #198754;
@@ -1043,7 +1071,7 @@ label i {
 }
 
 .copyright p {
-  text-align: center;
+  text-align: left;
 }
 
 .footer-menu ul li a {

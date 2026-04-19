@@ -4,7 +4,7 @@ import { useData } from "../context/DataContext";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
 
-export default function MotionSlider({ projectId, carouselMargin = 40, topMargin = 50, fontSize = "16px", opacity = 1, display, drag = "x", index, justified, classs, itemClass, xs, isAct }) {
+export default function MotionSlider({ projectId, leftMargin = 0, topMargin = 50, fontSize = "16px", opacity = 1, display, drag = "x", index, justified, classs, itemClass, xs, isAct }) {
   useEffect(() => {
     AOS.init({
       duration: 1200,       // Animation duration
@@ -102,13 +102,14 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
     <div className="p-0">
       <motion.div
         ref={carouselRef}
-        initial={{ marginBottom: 40 }}
-        animate={{ marginBottom: carouselMargin }}
+        // initial={{ height: 'fit-content' }}
+        // animate={{ height: carouselMargin }}
         transition={{
           duration: 0.5
         }}
         whileTap={{ cursor: "grabbing" }}
         className={`carouselMargin ${classs}`}
+
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -116,7 +117,7 @@ export default function MotionSlider({ projectId, carouselMargin = 40, topMargin
             className={`inner-carousel mb-5 d-flex ${index !== 0 ? "styled-box" : ""
               }`}
             drag={drag}
-            style={{ x }}
+            style={{ x, marginLeft: leftMargin }}
             dragConstraints={{ right: 0, left: -width }}
             dragElastic={0.15}
             dragMomentum={true}

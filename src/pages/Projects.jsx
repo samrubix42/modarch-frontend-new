@@ -47,6 +47,20 @@ const Projects = () => {
     setPreviousSlugs([]);
   }, [selectedCategory]);
   useEffect(() => {
+    if (activeSlug && filteredProjects?.length > 0) {
+      const isLast = filteredProjects[filteredProjects.length - 1]?.slug === activeSlug;
+      if (isLast) {
+        document.body.classList.add("last-project-active");
+        document.body.classList.remove("last-project-prev");
+      } else {
+        document.body.classList.remove("last-project-active");
+      }
+    } else {
+      document.body.classList.remove("last-project-active");
+    }
+  }, [activeSlug, previousSlugs, filteredProjects]);
+
+  useEffect(() => {
     if (activeSlug && projectRefs.current[activeSlug]) {
       const el = projectRefs.current[activeSlug];
       const activeIndex = filteredProjects.findIndex(
@@ -78,6 +92,7 @@ const Projects = () => {
       `/${selectedCategory?.selectedCategory || defaultCategory}/${slug}`
     );
   };
+  console.log('filteredProjects', filteredProjects?.length);
   return (
     <section className="projects pt-5">
       <div className="container-fluid">
@@ -85,7 +100,7 @@ const Projects = () => {
           <motion.div
             ref={rowRef}
             className="row relative"
-            style={{ transformOrigin: "center center", overflow: "visible" }}
+            style={{ transformOrigin: "center center" }}
           >
             {filteredProjects?.map((project, index) => {
               if (!project) return null;
@@ -118,18 +133,19 @@ const Projects = () => {
                   <motion.div
                     ref={setRef}
                     key={key}
-                    initial={{ opacity: 0.8, scale: 1.50 }}
-                    animate={{ opacity: 1, scale: 2.25 }}
+                    initial={{ opacity: 0.8, scale: 1.50, height: 'fit-content' }}
+                    animate={{ opacity: 1, scale: 2.25, height: '670px' }}
                     exit={{ opacity: 0, scale: 1 }}
                     transition={{ duration: 0.6, ease: "easeInOut" }}
-                    className="bg-green-200 rounded-lg relative z-20"
+                    className={`bg-green-200 rounded-lg relative z-20 ${index === filteredProjects?.length - 1 ? 'last-project' : ''}`}
                     style={{ transformOrigin: "top left" }}
                   >
-                    <div className="p-6">
+                    <div className={`p-6`} >
                       <Slider
                         projectId={slug}
                         onClick={() => handleClick(slug)}
-                        carouselMargin={380}
+                        // carouselMargin={670}
+                        leftMargin={0}
                         topMargin={50}
                         opacity={1}
                         fontSize={"8px"}
@@ -152,8 +168,8 @@ const Projects = () => {
                   <motion.div
                     ref={setRef}
                     key={key}
-                    initial={{ scale: 1 }}
-                    animate={{ scale: 1.4 }}
+                    initial={{ scale: 1, height: 'fit-content' }}
+                    animate={{ scale: 1.4, height: '430px' }}
                     transition={{ duration: 0.5 }}
                     className="bg-yellow-200 rounded-lg relative z-10 cursor-pointer"
                     style={{ transformOrigin: "top left" }}
@@ -162,7 +178,8 @@ const Projects = () => {
                     <div className="p-6">
                       <Slider
                         projectId={slug}
-                        carouselMargin={150}
+                        // carouselMargin={450}
+                        leftMargin={0}
                         topMargin={0}
                         opacity={0}
                         fontSize={"12px"}
@@ -183,7 +200,7 @@ const Projects = () => {
                   ref={setRef}
                   key={key}
                   // transition={{ duration: 0.4 }}
-                  className="relative z-0 cursor-pointer"
+                  className={`relative z-0 cursor-pointer sliders${index} ${index === filteredProjects?.length - 1 ? 'last-project' : ''}`}
                   onClick={() => handleClick(slug)}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -192,8 +209,9 @@ const Projects = () => {
                 >
                   <Slider
                     projectId={slug}
-                    carouselMargin={0}
+                    // carouselMargin={'fit-content'}
                     topMargin={0}
+                    leftMargin={-200}
                     opacity={0}
                     display={"none"}
                     fontSize={"12px"}
