@@ -255,7 +255,6 @@ footer {
   overflow: hidden;
   box-sizing: border-box;
   padding: 0px 5px;
-  /* height: fit-content !important; */
   border-radius: 0px !important;
 }
 
@@ -290,7 +289,6 @@ footer {
   border-radius: 0px;
   display: block;
   border-radius: 0px !important;
-  /* height: 100px; */
   object-position: right;
 }
 
@@ -383,6 +381,20 @@ button:focus:not(:focus-visible) {
   .descriptions p {
     margin-bottom: 0px !important;
     font-size: 8px !important;
+  }
+
+
+  .last-project-active footer {
+    top: 0px !important;
+  }
+
+  /* .project-active .item {
+    height: 350px !important;
+  } */
+
+  .mobileHeight .bg-green-200,
+  .mobileHeight .bg-yellow-200 {
+    height: fit-content !important;
   }
 
   .copyright p {
@@ -589,6 +601,15 @@ button:focus:not(:focus-visible) {
   .descriptions p {
     margin-bottom: 0px !important;
     font-size: 15px;
+  }
+
+  .mobileHeight .bg-green-200,
+  .mobileHeight .bg-yellow-200 {
+    height: fit-content !important;
+  }
+
+  .last-project-active footer {
+    top: 0px !important;
   }
 
   .copyright p {
@@ -834,13 +855,24 @@ button:focus:not(:focus-visible) {
 .secondItem img {
   object-fit: cover !important;
   width: 440px;
-  height: 440px;
+  /* height: 440px; */
   object-position: center;
 }
 
 /* .projct div:last-child {
   height: 430px;
 } */
+.item {
+  height: fit-content;
+}
+
+.project-active .bg-green-200 .item {
+  height: 280px;
+}
+
+.project-active .previousSlider .item {
+  height: 280px;
+}
 
 .smallImage {
   padding: 0px 7px;

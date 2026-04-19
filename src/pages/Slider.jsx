@@ -114,7 +114,7 @@ export default function MotionSlider({ projectId, leftMargin = 0, topMargin = 50
         <AnimatePresence mode="wait">
           <motion.div
             ref={innerCarouselRef}
-            className={`inner-carousel mb-5 d-flex ${index !== 0 ? "styled-box" : ""
+            className={`inner-carousel mb-3 d-flex ${index !== 0 ? "styled-box" : ""
               }`}
             drag={drag}
             style={{ x, marginLeft: leftMargin }}
@@ -173,8 +173,8 @@ export default function MotionSlider({ projectId, leftMargin = 0, topMargin = 50
                   {/* Project details */}
                   <motion.div
                     className="details"
-                    initial={{ opacity: opacity }}
-                    animate={{ opacity: opacity }}
+                    initial={{ display: display }}
+                    animate={{ display: display }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                   >
                     {

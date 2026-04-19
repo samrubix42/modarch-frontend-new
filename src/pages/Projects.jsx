@@ -48,6 +48,7 @@ const Projects = () => {
   }, [selectedCategory]);
   useEffect(() => {
     if (activeSlug && filteredProjects?.length > 0) {
+      document.body.classList.add("project-active");
       const isLast = filteredProjects[filteredProjects.length - 1]?.slug === activeSlug;
       if (isLast) {
         document.body.classList.add("last-project-active");
@@ -99,7 +100,7 @@ const Projects = () => {
         <AnimatePresence mode="wait">
           <motion.div
             ref={rowRef}
-            className="row relative"
+            className="row relative mobileHeight"
             style={{ transformOrigin: "center center" }}
           >
             {filteredProjects?.map((project, index) => {
@@ -134,7 +135,7 @@ const Projects = () => {
                     ref={setRef}
                     key={key}
                     initial={{ opacity: 0.8, scale: 1.50, height: 'fit-content' }}
-                    animate={{ opacity: 1, scale: 2.25, height: '670px' }}
+                    animate={{ opacity: 1, scale: 2.25, height: '640px' }}
                     exit={{ opacity: 0, scale: 1 }}
                     transition={{ duration: 0.6, ease: "easeInOut" }}
                     className={`bg-green-200 rounded-lg relative z-20 ${index === filteredProjects?.length - 1 ? 'last-project' : ''}`}
@@ -169,7 +170,7 @@ const Projects = () => {
                     ref={setRef}
                     key={key}
                     initial={{ scale: 1, height: 'fit-content' }}
-                    animate={{ scale: 1.4, height: '430px' }}
+                    animate={{ scale: 1.4, height: '400px' }}
                     transition={{ duration: 0.5 }}
                     className="bg-yellow-200 rounded-lg relative z-10 cursor-pointer"
                     style={{ transformOrigin: "top left" }}
@@ -186,7 +187,7 @@ const Projects = () => {
                         drag={"x"}
                         index={index}
                         justified={''}
-                        classs={'mobileSlider'}
+                        classs={'mobileSlider previousSlider'}
                         itemClass={'item'}
                         x={'0'}
                         isAct={0}
