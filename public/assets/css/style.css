@@ -284,13 +284,18 @@ footer {
 
 .item .project_box img,
 .project_box img {
-  width: 140px !important;
+  /* width: 140px !important; */
   object-fit: cover !important;
-  border-radius: 0px;
-  display: block;
+  /* display: block; */
   border-radius: 0px !important;
   object-position: right;
 }
+
+/* .project-active .item .project_box img,
+.project_box img {
+  width: 60px !important;
+  float: right;
+} */
 
 .contact ul li .contact-text {
   flex-direction: row !important;
@@ -660,7 +665,6 @@ button:focus:not(:focus-visible) {
 
   .mobileDetails img {
     border-radius: 0px !important;
-    height: 70px !important;
   }
 
   .mobileDetails p {
@@ -683,7 +687,13 @@ button:focus:not(:focus-visible) {
   }
 
   .mobileDetails img {
-    width: 100px !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .description {
+    min-width: 60% !important;
+    font-size: 34px;
   }
 
   .item {

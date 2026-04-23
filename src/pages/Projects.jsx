@@ -157,6 +157,7 @@ const Projects = () => {
                         itemClass={'item'}
                         x={'-120'}
                         isAct={1}
+                        thumbWidth={"60px"}
                       />
                     </div>
                   </motion.div>
@@ -191,6 +192,7 @@ const Projects = () => {
                         itemClass={'item'}
                         x={'0'}
                         isAct={0}
+                        thumbWidth={"60px"}
                       />
                     </div>
                   </motion.div>
@@ -223,6 +225,7 @@ const Projects = () => {
                     itemClass={'secondItem'}
                     x={'0'}
                     isAct={0}
+                    thumbWidth={"140px"}
 
                   />
                 </motion.div>

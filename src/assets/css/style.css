@@ -217,13 +217,6 @@ img {
   box-sizing: border-box;
 }
 
-.item .project_box img,
-.project_box img {
-  width: 100px;
-  object-fit: contain;
-  border-radius: 10px;
-}
-
 .item .project_box,
 .project_box {
   text-align: right;

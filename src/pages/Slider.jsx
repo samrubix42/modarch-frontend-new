@@ -4,7 +4,7 @@ import { useData } from "../context/DataContext";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
 
-export default function MotionSlider({ projectId, leftMargin = 0, topMargin = 50, fontSize = "16px", opacity = 1, display, drag = "x", index, justified, classs, itemClass, xs, isAct }) {
+export default function MotionSlider({ projectId, leftMargin = 0, topMargin = 50, fontSize = "16px", opacity = 1, display, drag = "x", index, justified, classs, itemClass, xs, isAct, thumbWidth }) {
   useEffect(() => {
     AOS.init({
       duration: 1200,       // Animation duration
@@ -127,14 +127,16 @@ export default function MotionSlider({ projectId, leftMargin = 0, topMargin = 50
             {project && (
               <motion.div className="item firstItem">
                 <div className="project_box" style={{ padding: "5px" }}>
-                  {project.project_thumbnail && (
-                    <img
-                      src={`${import.meta.env.VITE_IMG_URL}${project.project_thumbnail}`}
-                      alt={project.project_name}
-                      className="img-fluid mb-2"
-                      style={{ cursor: "zoom-in" }}
-                    />
-                  )}
+                  <div className="thumbnailImg">
+                    {project.project_thumbnail && (
+                      <img
+                        src={`${import.meta.env.VITE_IMG_URL}${project.project_thumbnail}`}
+                        alt={project.project_name}
+                        className="img-fluid mb-2"
+                        style={{ cursor: "zoom-in", width: thumbWidth }}
+                      />
+                    )}
+                  </div>
                   {/* Project title & address */}
                   {project.project_name && <h3 style={{ fontSize }}>{
                     (() => {
