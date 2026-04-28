@@ -141,12 +141,14 @@ export default function MotionSlider({ projectId, leftMargin = 0, topMargin = 50
                   {project.project_name && <h3 style={{ fontSize }}>{
                     (() => {
                       const words = project.project_name.trim().split(" ");
-                      if (words.length > 2) {
+                      if (words.length > 4) {
                         return (
                           <>
                             {words[0] + " " + words[1]}
                             <br />
-                            {words[2]}
+                            {words[2] + " " + words[3]}
+                            <br />
+                            {words[4]}
                           </>
                         );
                       } else if (words.length > 3) {
@@ -157,18 +159,17 @@ export default function MotionSlider({ projectId, leftMargin = 0, topMargin = 50
                             {words[2] + " " + words[3]}
                           </>
                         );
-                      } else if (words.length > 4) {
+                      } else if (words.length > 2) {
                         return (
                           <>
                             {words[0] + " " + words[1]}
                             <br />
-                            {words[2] + " " + words[3]}
-                            <br />
-                            {words[4]}
+                            {words[2]}
                           </>
                         );
+                      } else {
+                        return project.project_name; // ✅ fixed (not words array)
                       }
-                      return project.project_name;
                     })()
                   }</h3>}
                   {project.project_address && <p style={{ fontSize }}>{project.project_address}</p>}
@@ -191,39 +192,42 @@ export default function MotionSlider({ projectId, leftMargin = 0, topMargin = 50
                       project.client_name && (
                         <>
                           <p className="head">Client</p>
-                          {project.client_name && <p className="head2">{
-                            (() => {
-                              const words = project.client_name.trim().split(" ");
-                              if (words.length > 2) {
-                                return (
-                                  <>
-                                    {words[0] + " " + words[1]}
-                                    <br />
-                                    {words[2]}
-                                  </>
-                                );
-                              } else if (words.length > 3) {
-                                return (
-                                  <>
-                                    {words[0] + " " + words[1]}
-                                    <br />
-                                    {words[2] + " " + words[3]}
-                                  </>
-                                );
-                              } else if (words.length > 4) {
-                                return (
-                                  <>
-                                    {words[0] + " " + words[1]}
-                                    <br />
-                                    {words[2] + " " + words[3]}
-                                    <br />
-                                    {words[4]}
-                                  </>
-                                );
-                              }
-                              return project.client_name;
-                            })()
-                          }</p>}
+                          {project.client_name && (
+                            <p className="head2">
+                              {(() => {
+                                const words = project.client_name.trim().split(" ");
+                                if (words.length > 4) {
+                                  return (
+                                    <>
+                                      {words[0] + " " + words[1]}
+                                      <br />
+                                      {words[2] + " " + words[3]}
+                                      <br />
+                                      {words[4]}
+                                    </>
+                                  );
+                                } else if (words.length > 3) {
+                                  return (
+                                    <>
+                                      {words[0] + " " + words[1]}
+                                      <br />
+                                      {words[2] + " " + words[3]}
+                                    </>
+                                  );
+                                } else if (words.length > 2) {
+                                  return (
+                                    <>
+                                      {words[0] + " " + words[1]}
+                                      <br />
+                                      {words[2]}
+                                    </>
+                                  );
+                                } else {
+                                  return project.client_name; // ✅ fixed (not words array)
+                                }
+                              })()}
+                            </p>
+                          )}
                         </>
                       )
                     }
@@ -266,7 +270,7 @@ export default function MotionSlider({ projectId, leftMargin = 0, topMargin = 50
 
             {project?.project_main_image && (
               <motion.div className={`${(screen?.isMobile || screen?.isTablet) ? `${isAct ? 'item secondItem' : 'item secondItem'}` : itemClass}`} style={{
-                cursor: "zoom-in", padding: "5px",
+                cursor: "zoom-in", padding: "5px 5px 0px 5px",
               }}>
                 <img
                   src={`${import.meta.env.VITE_IMG_URL}${project.project_main_image}`}

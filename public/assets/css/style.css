@@ -291,6 +291,14 @@ footer {
   object-position: right;
 }
 
+.mobileDetails p {
+  text-align: left;
+}
+
+.slideBtn p {
+  text-align: right;
+}
+
 /* .project-active .item .project_box img,
 .project_box img {
   width: 60px !important;
