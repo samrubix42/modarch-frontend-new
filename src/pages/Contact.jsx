@@ -23,13 +23,38 @@ const Contact = ({ settings }) => {
     });
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState("");
+    const [errors, setErrors] = useState({});
 
     // ✅ Handle input changes
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+        // Clear error when user types
+        if (errors[e.target.name]) {
+            setErrors({ ...errors, [e.target.name]: "" });
+        }
     };
+
+    const validate = () => {
+        let tempErrors = {};
+        if (!formData.name.trim()) tempErrors.name = "Name is required";
+        else if (!/^[a-zA-Z\s]+$/.test(formData.name)) tempErrors.name = "Name can only contain letters and spaces";
+
+        if (!formData.email.trim()) tempErrors.email = "Email is required";
+        else if (!/\S+@\S+\.\S+/.test(formData.email)) tempErrors.email = "Email is invalid";
+
+        if (!formData.phone.trim()) tempErrors.phone = "Phone number is required";
+        else if (!/^\d{10,15}$/.test(formData.phone.replace(/[\s+-]/g, ''))) tempErrors.phone = "Phone number is invalid";
+
+        if (!formData.message.trim()) tempErrors.message = "Message is required";
+
+        setErrors(tempErrors);
+        return Object.keys(tempErrors).length === 0;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validate()) return;
+
         setLoading(true);
         setStatus("");
         try {
@@ -127,12 +152,12 @@ const Contact = ({ settings }) => {
                                                 type="text"
                                                 name="name"
                                                 id="name"
-                                                className="form-control"
+                                                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                                                 placeholder="Name"
                                                 value={formData.name}
                                                 onChange={handleChange}
-                                                required
                                             />
+                                            {errors.name && <div className="invalid-feedback text-start">{errors.name}</div>}
                                         </div>
                                     </div>
 
@@ -142,12 +167,12 @@ const Contact = ({ settings }) => {
                                                 type="email"
                                                 name="email"
                                                 id="email"
-                                                className="form-control"
+                                                className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                                 placeholder="Email"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                required
                                             />
+                                            {errors.email && <div className="invalid-feedback text-start">{errors.email}</div>}
                                         </div>
                                     </div>
 
@@ -171,11 +196,12 @@ const Contact = ({ settings }) => {
                                                 type="text"
                                                 name="phone"
                                                 id="phone"
-                                                className="form-control"
+                                                className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
                                                 placeholder="Phone"
                                                 value={formData.phone}
                                                 onChange={handleChange}
                                             />
+                                            {errors.phone && <div className="invalid-feedback text-start">{errors.phone}</div>}
                                         </div>
                                     </div>
 
@@ -185,12 +211,12 @@ const Contact = ({ settings }) => {
                                                 name="message"
                                                 id="message"
                                                 rows="4"
-                                                className="form-control"
+                                                className={`form-control ${errors.message ? 'is-invalid' : ''}`}
                                                 placeholder="Message"
                                                 value={formData.message}
                                                 onChange={handleChange}
-                                                required
                                             ></textarea>
+                                            {errors.message && <div className="invalid-feedback text-start">{errors.message}</div>}
                                         </div>
                                     </div>
 

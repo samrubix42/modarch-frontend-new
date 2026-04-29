@@ -41,28 +41,55 @@ const Contact = () => {
     const [portfolio_file, setPortfolioFile] = useState(null);
     const [status, setStatus] = useState({ type: "", message: "" });
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
 
     // ✅ handle text/select/textarea changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
+        if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
     };
 
     // ✅ handle file uploads
     const handleFileChange = (e) => {
         const { name, files } = e.target;
-        if (name === "resume") setResume(files[0]);
-        if (name === "portfolio_file") setPortfolioFile(files[0]);
+        if (name === "resume") {
+            setResume(files[0]);
+            if (errors.resume) setErrors((prev) => ({ ...prev, resume: "" }));
+        }
+        if (name === "portfolio_upload") setPortfolioFile(files[0]);
+    };
+
+    const validate = () => {
+        let tempErrors = {};
+        if (!formData.job_title) tempErrors.job_title = "Please select a job position";
+
+        if (!formData.name.trim()) tempErrors.name = "Name is required";
+        else if (!/^[a-zA-Z\s]+$/.test(formData.name)) tempErrors.name = "Name can only contain letters and spaces";
+
+        if (!formData.email.trim()) tempErrors.email = "Email is required";
+        else if (!/\S+@\S+\.\S+/.test(formData.email)) tempErrors.email = "Email is invalid";
+
+        if (!formData.phone?.trim()) tempErrors.phone = "Phone number is required";
+        else if (!/^\d{10,15}$/.test(formData.phone.replace(/[\s+-]/g, ''))) tempErrors.phone = "Phone number is invalid";
+
+        if (formData.portfolio_url && !/^(ftp|http|https):\/\/[^ "]+$/.test(formData.portfolio_url)) tempErrors.portfolio_url = "Portfolio URL is invalid";
+
+        if (!resume) tempErrors.resume = "Resume is required";
+
+        setErrors(tempErrors);
+        return Object.keys(tempErrors).length === 0;
     };
 
     // ✅ handle form submit
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validate()) return;
+
         setLoading(true);
         setStatus({ type: "info", message: "Submitting..." });
         try {
             const data = new FormData();
-            console.log('data', data);
             Object.keys(formData).forEach((key) => data.append(key, formData[key]));
             if (resume) data.append("resume", resume);
             if (portfolio_file) data.append("portfolio_file", portfolio_file);
@@ -173,10 +200,9 @@ const Contact = () => {
                                                 <i className="fa fa-file"></i> Job Position
                                             </label>
                                             <select
-                                                className="form-control"
-                                                name="position"
+                                                className={`form-control ${errors.job_title ? 'is-invalid' : ''}`}
+                                                name="job_title"
                                                 value={formData.job_title}
-                                                // onChange={handleChange}
                                                 onChange={(e) => {
                                                     const selectedOption = e.target.options[e.target.selectedIndex];
                                                     setFormData((prev) => ({
@@ -184,8 +210,8 @@ const Contact = () => {
                                                         job_title: e.target.value,
                                                         job_profile_id: selectedOption.getAttribute("data-id"),
                                                     }));
+                                                    if (errors.job_title) setErrors((prev) => ({ ...prev, job_title: "" }));
                                                 }}
-                                                required
                                             >
                                                 <option value="" disabled>
                                                     --Select--
@@ -194,6 +220,7 @@ const Contact = () => {
                                                     <option value={job.job_title} data-id={job.id} key={index}>{job.job_title}</option>
                                                 ))}
                                             </select>
+                                            {errors.job_title && <div className="invalid-feedback text-start">{errors.job_title}</div>}
                                         </div>
                                     </div>
 
@@ -206,12 +233,12 @@ const Contact = () => {
                                             <input
                                                 type="text"
                                                 name="name"
-                                                className="form-control"
+                                                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                                                 placeholder="Name"
                                                 value={formData.name}
                                                 onChange={handleChange}
-                                                required
                                             />
+                                            {errors.name && <div className="invalid-feedback text-start">{errors.name}</div>}
                                         </div>
                                     </div>
 
@@ -224,12 +251,12 @@ const Contact = () => {
                                             <input
                                                 type="email"
                                                 name="email"
-                                                className="form-control"
+                                                className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                                 placeholder="Email"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                required
                                             />
+                                            {errors.email && <div className="invalid-feedback text-start">{errors.email}</div>}
                                         </div>
                                     </div>
 
@@ -242,11 +269,12 @@ const Contact = () => {
                                             <input
                                                 type="text"
                                                 name="phone"
-                                                className="form-control"
+                                                className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
                                                 placeholder="Phone"
                                                 value={formData.phone}
                                                 onChange={handleChange}
                                             />
+                                            {errors.phone && <div className="invalid-feedback text-start">{errors.phone}</div>}
                                         </div>
                                     </div>
 
@@ -275,12 +303,13 @@ const Contact = () => {
                                             </label>
                                             <input
                                                 type="text"
-                                                name="portfolio"
-                                                className="form-control"
+                                                name="portfolio_url"
+                                                className={`form-control ${errors.portfolio_url ? 'is-invalid' : ''}`}
                                                 placeholder="Portfolio Link"
-                                                value={formData.portfolio}
+                                                value={formData.portfolio_url}
                                                 onChange={handleChange}
                                             />
+                                            {errors.portfolio_url && <div className="invalid-feedback text-start">{errors.portfolio_url}</div>}
                                         </div>
                                     </div>
 
@@ -293,10 +322,11 @@ const Contact = () => {
                                             <input
                                                 type="file"
                                                 name="resume"
-                                                className="form-control"
+                                                className={`form-control ${errors.resume ? 'is-invalid' : ''}`}
                                                 onChange={handleFileChange}
                                                 accept=".pdf,.doc,.docx,.jpg,.png"
                                             />
+                                            {errors.resume && <div className="invalid-feedback text-start">{errors.resume}</div>}
                                         </div>
                                     </div>
 
